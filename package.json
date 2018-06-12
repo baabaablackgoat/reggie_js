@@ -1,0 +1,28 @@
+{
+  "name": "reggie_js",
+  "version": "1.0.0",
+  "description": "shitty discord bot electric boogaloo",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baabaablackgoat/reggie_js.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "pleaseignore"
+  ],
+  "author": "baabaablackgoat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baabaablackgoat/reggie_js/issues"
+  },
+  "homepage": "https://github.com/baabaablackgoat/reggie_js#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2",
+    "node-opus": "^0.3.0"
+  }
+}
