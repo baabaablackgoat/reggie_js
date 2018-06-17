@@ -5,7 +5,7 @@ const reggies = [
     "https://vignette.wikia.nocookie.net/trollpasta/images/5/52/Reggie.gif",
     "http://1.bp.blogspot.com/-PODT3AddXPs/USmDr0dzNwI/AAAAAAAAAZo/GbnO5PhaNJQ/s1600/Regdalfdemo.gif"
 ];
-const main = function(bot,msg,args){
+const main = function(bot,globals,msg,args){
     msg.channel.send(reggies[Math.floor(Math.random()*reggies.length)]);
 };
 

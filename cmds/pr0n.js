@@ -1,5 +1,5 @@
 module.exports = {
-    "aliases":['foo','foobar'],
+    "aliases":['pron','pr0n','porn','yiff','e621'],
     "auth":false,
     "help": {
         "short":"foobar",
@@ -7,6 +7,6 @@ module.exports = {
         "args": false
     },
     "fn": function(bot,globals,msg,args){
-        msg.channel.send("bar");
+        msg.channel.send("no.\nt yet, you degenerate (/owo\\)");
     }
 };

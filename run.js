@@ -2,8 +2,11 @@ const discord = require("discord.js");
 const bot = new discord.Client();
 const fs = require("fs");
 const shlex = require("./shlex.js"); //Made by OllieTerrance on GitHub Gist
-const token = fs.readFileSync("./token.txt","utf-8");
+const token = require("./token.js");
 const cmds = {};
+let globals = {
+    "giphy" : require("giphy-api")(token.giphy),
+};
 let settings = require("./settings.json");
 
 console.log("Attempting to read directory cmds...");
@@ -24,7 +27,7 @@ bot.on("message",(msg)=>{
             let called_cmd = command_exists(split_msg[0]); 
             if (called_cmd){                                //Command confirmed to exist, proceed with auth check
                 //if (!called_cmd.auth || do_auth_stuff()){   //Needs work: some authentication system.
-                    called_cmd.fn(bot,msg,split_msg);           //run dat shiznit
+                    called_cmd.fn(bot,globals,msg,split_msg);           //run dat shiznit
                 //}
             } else if (settings.reply_cmd_not_found){   //Command does not exist.
                 msg.reply("Sorry, that command does not seem to exist.");
@@ -59,4 +62,4 @@ bot.on("ready",()=>{
 
 console.log("Logging into discord...");
 console.log(cmds);
-bot.login(token);
+bot.login(token.discord);
