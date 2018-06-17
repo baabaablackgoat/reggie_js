@@ -1,0 +1,4 @@
+{
+    "prefixes":["pls ","!"],
+    "reply_cmd_not_found": true
+}
