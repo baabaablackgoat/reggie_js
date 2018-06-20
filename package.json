@@ -23,6 +23,7 @@
   "homepage": "https://github.com/baabaablackgoat/reggie_js#readme",
   "dependencies": {
     "discord.js": "^11.3.2",
-    "giphy-api": "^1.2.7"
+    "giphy-api": "^1.2.7",
+    "ytdl-core": "^0.20.4"
   }
 }
