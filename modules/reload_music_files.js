@@ -5,20 +5,23 @@ NOT DONE
 */
 
 const fs = require("fs");
+const node_id3 = require("node-id3");
 module.exports = function(globals){
     globals.music_files = {};
     fs.readdir("./music_files",(err,data)=>{
         if (!err) {
             for (let file in data){
-                let filename = file.replace(/\.[^/.]+$/,"");
-                //do something to read out mp3 tags
-                let title = `${mp3title ? mp3title : filename}${mp3author ? " by "+mp3author : ""}`;
-                globals.music_files[filename] = {
-                    "source": `./music_files/${file}`,
-                    "title": title,
-                };
+                let filename = data[file].replace(/\.[^/.]+$/,"");
+                node_id3.read(`./music_files/${data[file]}`, (err,tags)=>{
+                    if (err) {console.log(`WARN Error while reading ID3 tag:\n${err}`);}
+                    let title = `${tags.title ? tags.title : filename}${tags.author ? " by "+tags.author : ""}`;
+                    globals.music_files[filename] = {
+                        "source": `./music_files/${data[file]}`,
+                        "title": title,
+                    };
+                });
             }
-            console.log(`Music files reloaded, found ${globals.music_files.keys().length} files`)
+            console.log(`Music files reloaded, found ${Object.keys(globals.music_files).length} files`);
         }
         else console.log(`WARN Failed to read directory music_files:\n${err}`);
     });

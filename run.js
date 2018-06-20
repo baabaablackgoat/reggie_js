@@ -58,7 +58,7 @@ const command_exists = function(called){
 };
 
 const reload_music_files = require("./modules/reload_music_files.js");
-reload_music_files();
+reload_music_files(globals);
 
 bot.on("ready",()=>{
     //runs once the bot is connected to discord using Client.login()
@@ -66,5 +66,5 @@ bot.on("ready",()=>{
 });
 
 console.log("Logging into discord...");
-console.log(cmds);
+
 bot.login(token.discord);

@@ -24,7 +24,7 @@ module.exports = function queue_check(bot,globals){
         globals.voice.connection.disconnect();
         globals.voice.connection = globals.voice.dispatcher = null;
     } else {
-        globals.queue[0].voice.join() //Establish a connection to the channel. *SHOULD* not cause problems when the channel is already correct. No guarantees.
+        globals.queue[0].voicechannel.join() //Establish a connection to the channel. *SHOULD* not cause problems when the channel is already correct. No guarantees.
             .then(con => {
                 globals.voice.connection = con;
                 if (globals.queue[0].location == "youtube"){
