@@ -20,7 +20,7 @@ Queue elements look like this:
 const ytdl = require("ytdl-core");
 
 module.exports = function queue_check(bot,globals){
-    if (globals.queue.length == 0){ //If there's nothing left in the queue, disconnect and clear global variables.
+    if (globals.queue.length === 0){ //If there's nothing left in the queue, disconnect and clear global variables.
         globals.voice.connection.disconnect();
         globals.voice.connection = globals.voice.dispatcher = null;
     } else {
