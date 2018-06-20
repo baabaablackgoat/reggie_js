@@ -5,6 +5,8 @@ const shlex = require("./shlex.js"); //Made by OllieTerrance on GitHub Gist
 const token = require("./token.js");
 const cmds = {};
 let globals = {
+    "queue": [],
+    "voice": {connection: null, dispatcher: null},
     "giphy" : require("giphy-api")(token.giphy),
 };
 let settings = require("./settings.json");
@@ -54,6 +56,9 @@ const command_exists = function(called){
     }
     return ret;
 };
+
+const reload_music_files = require("./modules/reload_music_files.js");
+reload_music_files();
 
 bot.on("ready",()=>{
     //runs once the bot is connected to discord using Client.login()
