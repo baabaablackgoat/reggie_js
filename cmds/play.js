@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const ytdl = require("ytdl-core");
 const queue_check = require("./../modules/queue_check.js");
 const main = function(bot,globals,msg,args){
@@ -47,11 +46,6 @@ const main = function(bot,globals,msg,args){
     }
 };
 
-=======
-const main = function(bot,globals,msg,args){
-    
-};
->>>>>>> cb0ac79bfab162012344668615185b15e482bbe2
 module.exports = {
     "aliases":['play'],
     "auth":false,
