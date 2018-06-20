@@ -36,7 +36,7 @@ module.exports = function queue_check(bot,globals){
                 globals.queue[0].textchannel.send(`:musical_note: Now playing **${globals.queue[0].title}**, queued by ${globals.queue[0].requestor.displayName}, in ${globals.queue[0].voicechannel.name}`);
                 globals.voice.dispatcher.on("end",(reason)=>{ //Dispatcher has finished (Probably because the file/stream ended.)
                     globals.queue.shift(); //Remove the item that was just played from queue.
-                    console.log(reason); //for debugging
+                    if (reason !=="Stream is not generating quickly enough.") console.log(reason); //this happens when the stream is over
                     queue_check(bot,globals); //R E C U R S I O N
                 });
                 globals.voice.dispatcher.on("error",(err)=>{
