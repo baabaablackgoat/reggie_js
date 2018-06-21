@@ -50,6 +50,6 @@ module.exports = function (str) {
         }
     }
     return quoteOpen ? false : out;
-}
+};
 
 // console.log(shlex(`some_command "some long arg that has spaces" foo bar b'ez \mlady`));

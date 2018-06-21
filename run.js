@@ -5,8 +5,9 @@ const shlex = require("./shlex.js"); //Made by OllieTerrance on GitHub Gist
 const token = require("./token.js");
 const cmds = {};
 let globals = {
-    "queue": [],
-    "voice": {connection: null, dispatcher: null},
+    "queue": [], //used for the music bit
+    "votes": {"music_skip":[]}, //collects votes - currently only for music
+    "voice": {"connection": null, "dispatcher": null}, //stores information about where
     "giphy" : require("giphy-api")(token.giphy),
 };
 let settings = require("./settings.json");
@@ -20,22 +21,25 @@ for (let i in cmd_temp){
 console.log("Creating message listener...");
 bot.on("message",(msg)=>{
     //called every time the bot "sees" a message.
-
-    //if (!some_global.blacklist.includes(msg.author)){
-        called_prefix = has_prefix(msg.content);
-        if (called_prefix){
-            msg.content = msg.content.substr(called_prefix.length);
-            let split_msg = shlex(msg.content);
-            let called_cmd = command_exists(split_msg[0]); 
-            if (called_cmd){                                //Command confirmed to exist, proceed with auth check
-                //if (!called_cmd.auth || do_auth_stuff()){   //Needs work: some authentication system.
-                    called_cmd.fn(bot,globals,msg,split_msg);           //run dat shiznit
-                //}
-            } else if (settings.reply_cmd_not_found){   //Command does not exist.
-                msg.reply("Sorry, that command does not seem to exist.");
+    if (msg.channel.type !== "text"){ //Avoiding nasty crashes.
+        msg.channel.send(`Sorry, but I currently don't support DM commands.`);
+    } else {
+        //if (!some_global.blacklist.includes(msg.author)){
+            called_prefix = has_prefix(msg.content);
+            if (called_prefix){
+                msg.content = msg.content.substr(called_prefix.length);
+                let split_msg = shlex(msg.content);
+                let called_cmd = command_exists(split_msg[0]); 
+                if (called_cmd){                                //Command confirmed to exist, proceed with auth check
+                    //if (!called_cmd.auth || do_auth_stuff()){   //Needs work: some authentication system.
+                        called_cmd.fn(bot,globals,msg,split_msg);           //run dat shiznit
+                    //}
+                } else if (settings.reply_cmd_not_found){   //Command does not exist.
+                    msg.reply("Sorry, that command does not seem to exist.");
+                }
             }
-        }
-    //} Uncomment me once blacklisting was added.
+        //} Uncomment me once blacklisting was added.
+    }
 });
 
 const has_prefix = function(msg_content){
