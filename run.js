@@ -12,13 +12,13 @@ let globals = {
 };
 let settings = require("./settings.json");
 
-console.log("Attempting to read directory cmds...");
+console.log("INFO Attempting to read directory cmds...");
 let cmd_temp = fs.readdirSync("./cmds");
 for (let i in cmd_temp){
     cmds[cmd_temp[i]] = require(`./cmds/${cmd_temp[i]}`);
 }
 
-console.log("Creating message listener...");
+console.log("INFO Creating message listener...");
 bot.on("message",(msg)=>{
     //called every time the bot "sees" a message.
     if (msg.channel.type !== "text"){ //Avoiding nasty crashes.
@@ -69,6 +69,13 @@ bot.on("ready",()=>{
     console.log(`Logged in: ${bot.user.tag}`);
 });
 
-console.log("Logging into discord...");
+bot.on("error",(err)=>{
+    console.error(`FATAL Error in client:\n${err}`);
+});
+bot.on("reconnecting",()=>{
+    console.log(`INFO Attempting to reconnect...`);
+});
+
+console.log("INFO Logging into discord...");
 
 bot.login(token.discord);
