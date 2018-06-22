@@ -1,6 +1,7 @@
 # reggie.js
-## The shitty successor of the shitty [Solstice Bot](https://github.com/baabaablackgoat/SolsticeBot)
-because why not.
+The shitty successor of the shitty [Solstice Bot](https://github.com/baabaablackgoat/SolsticeBot), because why not.
+
+**Built with [Discord.js](https://discord.js.org/) [(GitHub Repo)](https://github.com/discordjs/discord.js), which is licensed under Apache 2.0.**
 
 This is a rewrite from the ground up. Features will be missing, and new features will be added. ~~Not like anyone cares about the bot anyways.~~
 
