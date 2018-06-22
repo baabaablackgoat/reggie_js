@@ -36,10 +36,10 @@ bot.on("message",(msg)=>{
                         if (ratelimit(called_cmd)){ //Ratelimiting
                             called_cmd.fn(bot,globals,msg,split_msg);   //run dat shiznit
                         } else { //Ratelimit reached
-                            msg.channel.sendMessage(`This command has a ratelimit which has been reached. Try again later.`);
+                            msg.channel.send(`This command has a ratelimit which has been reached. Try again later.`);
                         }                  
                     } else { //Auth failed
-                        msg.channel.sendMessage(`There is an authority check on this command, and you failed to pass it, ${msg.member.displayName}.\nRequired authentication: ${called_cmd.auth}`);
+                        msg.channel.send(`There is an authority check on this command, and you failed to pass it, ${msg.member.displayName}.\nRequired authentication: ${called_cmd.auth}`);
                     }
                 } else if (settings.reply_cmd_not_found){   //Command does not exist.
                     msg.reply("Sorry, that command does not seem to exist.");
@@ -91,6 +91,8 @@ const auth = function(msg,called_cmd){
             console.log(`WARN Error while authenticating command usage:\n${err}`)
             return false;
         }
+    } else {
+        return true;
     }
 }
 
