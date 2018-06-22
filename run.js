@@ -2,9 +2,11 @@ const discord = require("discord.js");
 const bot = new discord.Client();
 const fs = require("fs");
 const shlex = require("./modules/shlex.js"); //Made by OllieTerrance on GitHub Gist
+const command_exists = require("./modules/command_exists");
 const token = require("./token.js");
 const cmds = {};
 let globals = {
+    "cmds": cmds,
     "queue": [], //used for the music bit
     "votes": {"music_skip":[]}, //collects votes - currently only for music
     "voice": {"connection": null, "dispatcher": null}, //stores information about where
@@ -30,7 +32,7 @@ bot.on("message",(msg)=>{
             if (called_prefix){
                 msg.content = msg.content.substr(called_prefix.length);
                 let split_msg = shlex(msg.content);
-                let called_cmd = command_exists(split_msg[0]); 
+                let called_cmd = command_exists(split_msg[0],cmds); 
                 if (called_cmd){                    //Command confirmed to exist, proceed with auth check
                     if (auth(msg,called_cmd)){      //User authentication
                         if (ratelimit(called_cmd)){ //Ratelimiting
@@ -56,17 +58,7 @@ const has_prefix = function(msg_content){
     }
     return false;
 };
-const command_exists = function(called){
-    //checks if the command exists in the cmds object. Returns respective cmd object or false.
-    let ret = false;
-    for (let key in cmds){
-        if (cmds.hasOwnProperty(key) && cmds[key].aliases.includes(called)){
-            ret = cmds[key];
-            break;
-        }
-    }
-    return ret;
-};
+
 const ratelimit = function(called_cmd){
     //Checks if the command has a ratelimit, and if it has reached this limit. Returns true if execution is ok, and false if ratelimit is reached.
     // Ratelimited commands get this addl. property in their exports object: {"time": time in ms, "calls": amt of calls allowed in time} 
