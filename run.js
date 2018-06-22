@@ -101,7 +101,7 @@ reload_music_files(globals);
 
 bot.on("ready",()=>{
     //runs once the bot is connected to discord using Client.login()
-    console.log(`Logged in: ${bot.user.tag}`);
+    console.log(`INFO Logged in: ${bot.user.tag}`);
 });
 
 bot.on("error",(err)=>{
