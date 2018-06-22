@@ -1,7 +1,7 @@
 const discord = require("discord.js");
 const bot = new discord.Client();
 const fs = require("fs");
-const shlex = require("./shlex.js"); //Made by OllieTerrance on GitHub Gist
+const shlex = require("./modules/shlex.js"); //Made by OllieTerrance on GitHub Gist
 const token = require("./token.js");
 const cmds = {};
 let globals = {
@@ -9,6 +9,7 @@ let globals = {
     "votes": {"music_skip":[]}, //collects votes - currently only for music
     "voice": {"connection": null, "dispatcher": null}, //stores information about where
     "giphy" : require("giphy-api")(token.giphy),
+    "ratelimit": {},
 };
 let settings = require("./settings.json");
 
@@ -30,10 +31,16 @@ bot.on("message",(msg)=>{
                 msg.content = msg.content.substr(called_prefix.length);
                 let split_msg = shlex(msg.content);
                 let called_cmd = command_exists(split_msg[0]); 
-                if (called_cmd){                                //Command confirmed to exist, proceed with auth check
-                    //if (!called_cmd.auth || do_auth_stuff()){   //Needs work: some authentication system.
-                        called_cmd.fn(bot,globals,msg,split_msg);           //run dat shiznit
-                    //}
+                if (called_cmd){                    //Command confirmed to exist, proceed with auth check
+                    if (auth(msg,called_cmd)){      //User authentication
+                        if (ratelimit(called_cmd)){ //Ratelimiting
+                            called_cmd.fn(bot,globals,msg,split_msg);   //run dat shiznit
+                        } else { //Ratelimit reached
+                            msg.channel.sendMessage(`This command has a ratelimit which has been reached. Try again later.`);
+                        }                  
+                    } else { //Auth failed
+                        msg.channel.sendMessage(`There is an authority check on this command, and you failed to pass it, ${msg.member.displayName}.\nRequired authentication: ${called_cmd.auth}`);
+                    }
                 } else if (settings.reply_cmd_not_found){   //Command does not exist.
                     msg.reply("Sorry, that command does not seem to exist.");
                 }
@@ -60,6 +67,32 @@ const command_exists = function(called){
     }
     return ret;
 };
+const ratelimit = function(called_cmd){
+    //Checks if the command has a ratelimit, and if it has reached this limit. Returns true if execution is ok, and false if ratelimit is reached.
+    // Ratelimited commands get this addl. property in their exports object: {"time": time in ms, "calls": amt of calls allowed in time} 
+    if (called_cmd.hasOwnProperty("ratelimit") && called_cmd.ratelimit){ //both "ratelimit": false and no property at all are valid.
+        if (!globals.ratelimit.hasOwnProperty(called_cmd)){ //create entry if necessary
+            globals.ratelimit[called_cmd] = {"timestamp": 0, "calls": 0}
+        } 
+        if (globals.ratelimit[called_cmd].timestamp <= Date.now()){ //timestamp has expired. make new timestamp and reset calls amt.
+            globals.ratelimit[called_cmd] = {"timestamp": Date.now() + called_cmd.ratelimit.time, "calls": 0}  
+        } 
+        globals.ratelimit[called_cmd].calls++;
+        return globals.ratelimit[called_cmd].calls <= called_cmd.ratelimit.calls; //will return true if calls are less or equal to limit.
+    } else { //no ratelimit
+        return true;
+    }
+}
+const auth = function(msg,called_cmd){
+    if (called_cmd.hasOwnProperty("auth") && called_cmd.auth) { //both "auth": false and no property at all are valid.
+        try {
+            return msg.member.hasPermission(called_cmd.auth);
+        } catch (err) { //When in doubt, do not allow usage, and log this.
+            console.log(`WARN Error while authenticating command usage:\n${err}`)
+            return false;
+        }
+    }
+}
 
 const reload_music_files = require("./modules/reload_music_files.js");
 reload_music_files(globals);
