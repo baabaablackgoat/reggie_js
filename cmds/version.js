@@ -6,7 +6,8 @@ const main = function(bot,globals,msg,args){
         "author": {"name": info.tag ? info.tag : `${info.sha.substr(0,7)} (${info.lastTag})`},
         "timestamp": info.authorDate,
         "title":info.commitMessage,
-        "description": info.author
+        "description": info.author,
+        "url":`https://github.com/baabaablackgoat/reggie_js/commit/${info.sha}`
     }));
 };
 
