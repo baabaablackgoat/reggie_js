@@ -22,6 +22,9 @@ const main = function(bot,globals,msg,args){
                 fields: [{name:"Description",value:cmdeval.help.short,inline:true},{name:"Aliases",value:cmdeval.aliases.join(", "),inline:true},{name:"Documentation",value:cmdeval.help.long}],
             });
             reply.setColor([255,125,0]);
+            if (cmdeval.hasOwnProperty("auth") && cmdeval.auth) {
+                reply.addField("Auth checks",cmdeval.auth,true);
+            }
             if (cmdeval.help.args){
                 let argsstring = "";
                 for (let i=0;i<cmdeval.help.args.length;i++){
