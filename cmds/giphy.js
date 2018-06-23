@@ -14,9 +14,9 @@ module.exports = {
     "aliases":['giphy','gif'],
     "auth":false,
     "help": {
-        "short":"foobar",
-        "long":"foobar",
-        "args": false
+        "short":"Get a gif from GIPHY.",
+        "long":"Get one of the top 20 gifs related to either Reggie Fils-Aime, or a keyword you define.",
+        "args": [{"name":"command","required":false,"usage":"Keyword to use in GIF search."}]
     },
     "fn": main
 };

@@ -1,3 +1,5 @@
+//Hey, you! Should you decide to fork this repository, make sure you change the url in line 12 to YOUR repo link.
+
 const discord = require("discord.js");
 const get_git_info = require("git-repo-info");
 const main = function(bot,globals,msg,args){
@@ -14,8 +16,8 @@ const main = function(bot,globals,msg,args){
 module.exports = {
     "aliases":['version'],
     "help": {
-        "short":"Shows the bot's git version information",
-        "long":"seriously thats it",
+        "short":"Shows bot version info",
+        "long":"Will display the current sha, the last tag, and other useful things to identify what commit this bot runs on. Also links to the respective commit in the repo.",
         "args": false
     },
     "fn": main

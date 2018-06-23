@@ -3,9 +3,9 @@ module.exports = {
     "aliases":['np','nowplaying','whatsthissong','whatsplaying'],
     "auth":false,
     "help": {
-        "short":"xd",
-        "long":"xd",
-        "args": false
+        "short":"What's playing?",
+        "long":"Will respond with information about the song currently being played by the bot.",
+        "args": false,
     },
     "fn": function(bot,globals,msg,args){
         let element = globals.queue[0];

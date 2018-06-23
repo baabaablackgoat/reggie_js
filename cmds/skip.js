@@ -1,9 +1,9 @@
 const main = function(bot,globals,msg,args){
-    if (msg.member.permissions.has("ADMINISTRATOR")){
+    if (["force","admin","now"].includes(args[1]) && msg.member.permissions.has("ADMINISTRATOR")){
         msg.channel.send(`:raised_hand: ${msg.member.displayName} has forcefully skipped the current song.`);
         globals.voice.dispatcher.end(`Forceskip by ${msg.member.displayName}`);
     } else {
-        let req_votes = Math.ceil(globals.voice.connection.channel.members.size - 1)/2; //the bot is a member too, you know! (that's what she said.)
+        let req_votes = Math.ceil((globals.voice.connection.channel.members.size - 1)/2); //the bot is a member too, you know! (that's what she said.)
         if (!globals.votes.music_skip.includes(msg.author.id)){ //DIDN'T vote yet.
             globals.votes.music_skip.push(msg.author.id);
         }
@@ -19,9 +19,9 @@ module.exports = {
     "aliases":['skip','ohgodnotthissongplease'],
     "auth":false,
     "help": {
-        "short":"foobar",
-        "long":"foobar",
-        "args": false
+        "short":"Skip the current song.",
+        "long":"Will add a vote to skip the song. If enough votes are reached (>=50% of listeners), the song is skipped. Only admins can force a skip.",
+        "args": [{"name":"force","required":false,"usage":"'force/admin/now' will skip the song immediately."}]
     },
     "fn": main
 };

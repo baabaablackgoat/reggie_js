@@ -13,9 +13,10 @@ module.exports = {
     "aliases":['reggie'],
     "auth":false,
     "help": {
-        "short":"reggie",
-        "long":"r u redy",
-        "args": false
+        "short":"My body is Reggie.",
+        "long":"Is yours?",
+        "args": false,
+        "hide": true,
     },
     "fn": main
 };

@@ -50,9 +50,9 @@ module.exports = {
     "aliases":['play'],
     "auth":false,
     "help": {
-        "short":"foobar",
-        "long":"foobar",
-        "args": false
+        "short":"Play something in your voice channel.",
+        "long":"Allows you to add something to the music queue. Currently supports YouTube links and local files.",
+        "args": [{"name":"source","required":true,"usage":"To be played YouTube link or local file."}]
     },
     "fn": main
 };
