@@ -21,7 +21,7 @@ const meta_recursive = function(data,globals,i){
             console.log(`INFO Music files reloaded, found ${Object.keys(globals.music_files).length} file(s)`);
         }
     });
-}
+};
 
 module.exports = function(globals){
     globals.music_files = {};
