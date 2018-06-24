@@ -2,7 +2,7 @@ const main = function(bot,globals,msg,args){
     if (["force","admin","now"].includes(args[1]) && msg.member.permissions.has("ADMINISTRATOR")){
         msg.channel.send(`:raised_hand: ${msg.member.displayName} has forcefully skipped the current song.`);
         globals.voice.dispatcher.end(`Forceskip by ${msg.member.displayName}`);
-    } else {
+    } else if (globals.voice.connection.channel.id === msg.member.voiceChannelID){
         let req_votes = Math.ceil((globals.voice.connection.channel.members.size - 1)/2); //the bot is a member too, you know! (that's what she said.)
         if (!globals.votes.music_skip.includes(msg.author.id)){ //DIDN'T vote yet.
             globals.votes.music_skip.push(msg.author.id);
@@ -12,6 +12,8 @@ const main = function(bot,globals,msg,args){
             msg.channel.send(`:raised_hand: The current song has been voteskipped.`);
             globals.voice.dispatcher.end("Voteskip");
         }
+    } else {
+        msg.channel.send(`:wheelchair: You're not in the voice channel, ${msg.member.displayName}! You can't vote on skipping.`);
     }
 };
 

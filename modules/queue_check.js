@@ -43,6 +43,12 @@ module.exports = function queue_check(bot,globals){
                 globals.voice.dispatcher.on("error",(err)=>{
                     console.log(`WARN Voice dispatcher errored:\n${err}`);
                 });
-            });
+            })
+        .catch(err =>{
+            globals.queue[0].textchannel.send(`I wasn't able to join the voice channel for **${globals.queue[0].title}**. Skipping.`);
+            console.log(`Failed to join voicechannel:\n${err}`);
+            globals.queue.shift(); //Skip, cause there never was a dispatcher
+            queue_check(bot,globals); //Attempt to play next thing
+        });
     }
 };

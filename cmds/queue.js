@@ -12,8 +12,8 @@ module.exports = {
             msg.channel.send(`My queue is empty. You can add something with \`play\`!`);
         } else {
             let response = "";
-            for (let i in globals.queue){
-                response += `${i === 0 ? "🎵" : "#"+i}\t${globals.queue[i].title} | Q'd by ${globals.queue[i].requestor.displayName}\n`;
+            for (let i = 0; i < globals.queue.length; i++){
+                response += `${i === 0 ? "\`🎵\`" : "\`#"+i+"\`"}\t**${globals.queue[i].title}** | Q'd by ${globals.queue[i].requestor.displayName}\n`;
             }
             msg.channel.send(response);
         }
