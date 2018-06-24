@@ -9,7 +9,7 @@ const main = function(bot,globals,msg,args){
             if (globals.cmds[cmdkeys[key]].help.hasOwnProperty("hide") && globals.cmds[cmdkeys[key]].help.hide){
                 continue;
             } else {
-                replystring += `\`${globals.cmds[cmdkeys[key]].aliases[0]}\`${" ".repeat(12-globals.cmds[cmdkeys[key]].aliases[0].length)}${globals.cmds[cmdkeys[key]].help.short}\n`;
+                replystring += `\`${globals.cmds[cmdkeys[key]].aliases[0]}${" ".repeat(12-globals.cmds[cmdkeys[key]].aliases[0].length)}|\`${globals.cmds[cmdkeys[key]].help.short}\n`;
             }
         }
         reply.addField("All commands:",replystring);
