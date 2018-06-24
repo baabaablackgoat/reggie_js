@@ -8,7 +8,7 @@ const meta = require("musicmetadata");
 const meta_recursive = function(data,globals,i){
     let filename = data[i].replace(/\.[^/.]+$/,"");
     meta(fs.createReadStream(`./music_files/${data[i]}`),{duration: true}, (err,tags)=>{
-        if (err) {console.log(`WARN Error while attempting to read metadata:\n{err}`);}
+        if (err) {console.log(`WARN Error while attempting to read metadata of ${data[i]}:\n${err}`);}
         globals.music_files[filename] = {
             "source": `./music_files/${data[i]}`,
             "title": `${tags.title ? tags.title : filename}${tags.artist.length !== 0 ? " by "+tags.artist.join(", ") : ""}`,
