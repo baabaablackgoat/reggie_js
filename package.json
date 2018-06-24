@@ -25,7 +25,7 @@
     "discord.js": "^11.3.2",
     "giphy-api": "^1.2.7",
     "git-repo-info": "^2.0.0",
-    "node-id3": "^0.1.5",
+    "musicmetadata": "^2.0.5",
     "node-opus": "^0.3.0",
     "ytdl-core": "^0.20.4"
   }
