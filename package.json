@@ -27,6 +27,7 @@
     "git-repo-info": "^2.0.0",
     "musicmetadata": "^2.0.5",
     "node-opus": "^0.3.0",
+    "request": "^2.87.0",
     "ytdl-core": "^0.20.4"
   }
 }
