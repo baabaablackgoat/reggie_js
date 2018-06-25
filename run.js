@@ -5,6 +5,7 @@ const shlex = require("./modules/shlex.js"); //Made by OllieTerrance on GitHub G
 const command_exists = require("./modules/command_exists");
 const token = require("./token.js");
 const cmds = {};
+let settings = require("./settings.json");
 let globals = {
     "cmds": cmds,
     "queue": [], //used for the music bit
@@ -12,8 +13,9 @@ let globals = {
     "voice": {"connection": null, "dispatcher": null}, //stores information about where
     "giphy" : require("giphy-api")(token.giphy),
     "ratelimit": {},
+    "settings": settings,
 };
-let settings = require("./settings.json");
+
 
 console.log("INFO Attempting to read directory cmds...");
 let cmd_temp = fs.readdirSync("./cmds");
