@@ -5,7 +5,7 @@ module.exports = {
     "auth":false,
     "help": {
         "short":"Gets a random post from e621.",
-        "long":"Will post a random post from e621 (Score >= 10). You can supply tags like this: \"tag1 tag2 tag3\" (don't forget the quotes.)\nIf used in an NSFW channel or using the bypass flag, it will also include NSFW results.",
+        "long":`Will post a random post from e621. You can supply tags like this: \"tag1 tag2 tag3\" (don't forget the quotes.)\nIf used in an NSFW channel or using the bypass flag, it will also include NSFW results.`,
         "args": [{"name":"tags","required":false,"usage":"Tags the bot will use to search."},{"name":"force","required":false,"usage":"Override the NSFW channel check."}],
     },
     "fn": function(bot,globals,msg,args){
