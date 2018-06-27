@@ -3,9 +3,12 @@ const bot = new discord.Client();
 const fs = require("fs");
 const shlex = require("./modules/shlex.js"); //Made by OllieTerrance on GitHub Gist
 const command_exists = require("./modules/command_exists");
+const checkAuth = require("./modules/check_auth");
 const token = require("./token.js");
 const cmds = {};
+if (!fs.existsSync("./settings.json")){fs.copyFileSync("./templates/settings_template.json","./settings.json");}
 let settings = require("./settings.json");
+if (!fs.existsSync("./usergroups.json")){fs.copyFileSync("./templates/usergroups_template.json","./usergroups.json");}
 let globals = {
     "cmds": cmds,
     "queue": [], //used for the music bit
@@ -14,8 +17,8 @@ let globals = {
     "giphy" : require("giphy-api")(token.giphy),
     "ratelimit": {},
     "settings": settings,
+    "usergroups": {},
 };
-
 
 console.log("INFO Attempting to read directory cmds...");
 let cmd_temp = fs.readdirSync("./cmds");
@@ -81,8 +84,9 @@ const ratelimit = function(called_cmd){
 }
 const auth = function(msg,called_cmd){
     if (called_cmd.hasOwnProperty("auth") && called_cmd.auth) { //both "auth": false and no property at all are valid.
+        if (typeof called_cmd.auth === "string") {called_cmd.auth = [called_cmd.auth]; console.log(`INFO Auth property of ${called_cmd.aliases[0]} should be an array.`);}
         try {
-            return msg.member.hasPermission(called_cmd.auth);
+            return checkAuth(msg.member,called_cmd.auth,0,globals);
         } catch (err) { //When in doubt, do not allow usage, and log this.
             console.log(`WARN Error while authenticating command usage:\n${err}`)
             return false;
@@ -91,6 +95,20 @@ const auth = function(msg,called_cmd){
         return true;
     }
 }
+
+const reload_usergroups = function(){
+    globals.usergroups = JSON.parse(fs.readFileSync("./usergroups.json"));
+    for (let key in globals.usergroups){
+        if (globals.usergroups[key].hasOwnProperty("inherits")){
+            console.log("yes");
+            for (let i=0;i<globals.usergroups[key].inherits.length;i++){
+                globals.usergroups[globals.usergroups[key].inherits[i]].users = globals.usergroups[globals.usergroups[key].inherits[i]].users.concat(globals.usergroups[key].users);
+            }
+        }
+    }
+}
+reload_usergroups();
+console.log(globals.usergroups);
 
 const reload_music_files = require("./modules/reload_music_files.js");
 reload_music_files(globals);

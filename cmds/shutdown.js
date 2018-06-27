@@ -1,6 +1,6 @@
 module.exports = {
     "aliases":['fuckoff','shutdown'],
-    "auth":{"discord":"ADMINISTRATOR"},
+    "auth":["owner"],
     "help": {
         "short":"Shuts down the bot.",
         "long":"Will log off the bot from discord and close the Node console.",

@@ -2,6 +2,7 @@ const request = require("request");
 const discord = require("discord.js");
 module.exports = {
     "aliases":['e621','yiff','furbot','nsfw'],
+    "ratelimit": {"time":10000,"calls": 5},
     "auth":false,
     "help": {
         "short":"Gets a random post from e621.",

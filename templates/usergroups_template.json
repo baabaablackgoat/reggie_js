@@ -1,0 +1,13 @@
+{
+    "trusted": {
+        "users":[]
+    },
+    "best_friends": {
+        "inherits": ["trusted"],
+        "users":[]
+    },
+    "owner": {
+        "inherits": ["best_friends"],
+        "users":[]
+    }
+}
