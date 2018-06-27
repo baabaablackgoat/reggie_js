@@ -100,15 +100,14 @@ const reload_usergroups = function(){
     globals.usergroups = JSON.parse(fs.readFileSync("./usergroups.json"));
     for (let key in globals.usergroups){
         if (globals.usergroups[key].hasOwnProperty("inherits")){
-            console.log("yes");
             for (let i=0;i<globals.usergroups[key].inherits.length;i++){
                 globals.usergroups[globals.usergroups[key].inherits[i]].users = globals.usergroups[globals.usergroups[key].inherits[i]].users.concat(globals.usergroups[key].users);
             }
         }
     }
+    console.log(`INFO Usergroups reloaded, inheritance applied.`);
 }
 reload_usergroups();
-console.log(globals.usergroups);
 
 const reload_music_files = require("./modules/reload_music_files.js");
 reload_music_files(globals);
