@@ -19,7 +19,7 @@ Queue elements look like this:
 */
 const ytdl = require("ytdl-core");
 
-module.exports = function queue_check(bot,globals){
+module.exports = function queue_check(globals){
     globals.votes.music_skip = [];
     if (globals.queue.length === 0){ //If there's nothing left in the queue, disconnect and clear global variables.
         globals.voice.connection.disconnect();
@@ -38,7 +38,7 @@ module.exports = function queue_check(bot,globals){
                 globals.voice.dispatcher.on("end",(reason)=>{ //Dispatcher has finished (Probably because the file/stream ended.)
                     globals.queue.shift(); //Remove the item that was just played from queue.
                     if (reason !=="Stream is not generating quickly enough.") console.log(reason); //this happens when the stream is over
-                    queue_check(bot,globals); //R E C U R S I O N
+                    queue_check(globals); //R E C U R S I O N
                 });
                 globals.voice.dispatcher.on("error",(err)=>{
                     console.log(`WARN Voice dispatcher errored:\n${err}`);
@@ -48,7 +48,7 @@ module.exports = function queue_check(bot,globals){
             globals.queue[0].textchannel.send(`I wasn't able to join the voice channel for **${globals.queue[0].title}**. Skipping.`);
             console.log(`Failed to join voicechannel:\n${err}`);
             globals.queue.shift(); //Skip, cause there never was a dispatcher
-            queue_check(bot,globals); //Attempt to play next thing
+            queue_check(globals); //Attempt to play next thing
         });
     }
 };
