@@ -13,9 +13,26 @@ let replies = {
     guessilldie: ['https://i.redditmedia.com/DMhY_-i-VVj4bfpGaVwP9iTKvOTlzC1cLf2QOC8LRuw.jpg?w=1024&s=1f1fbcf502033f6055eb803c10fcca42'],
     bang: [":gun: We'll bang, okay?",":gun: https://www.youtube.com/watch?v=oApBrFAtRrc"],
     octagon: ["https://www.youtube.com/watch?v=tiOXY1fuv4k"],
+    profit: ["https://www.youtube.com/watch?v=tO5sxLapAts"],
+    deletthis: ["https://baabaablackgoat.com/projects/deletthis/res/delet/1.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/2.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/3.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/4.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/5.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/6.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/7.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/8.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/9.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/10.png",
+        "https://baabaablackgoat.com/projects/deletthis/res/delet/11.png",
+        "shameless self promotion ( ͡° ͜ʖ ͡°) http://deletth.is",
+    ],
+    nudes: ["https://i.kym-cdn.com/entries/icons/original/000/004/161/mybody.jpg"]
+
 };
 replies.cock = replies.upcock;
 replies.hentie = replies.hentai;
+replies.delet = replies.deletthis;
 
 module.exports = {
     "aliases":Object.keys(replies),
