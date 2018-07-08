@@ -71,30 +71,30 @@ const ratelimit = function(called_cmd){
     // Ratelimited commands get this addl. property in their exports object: {"time": time in ms, "calls": amt of calls allowed in time} 
     if (called_cmd.hasOwnProperty("ratelimit") && called_cmd.ratelimit){ //both "ratelimit": false and no property at all are valid.
         if (!globals.ratelimit.hasOwnProperty(called_cmd)){ //create entry if necessary
-            globals.ratelimit[called_cmd] = {"timestamp": 0, "calls": 0}
+            globals.ratelimit[called_cmd] = {"timestamp": 0, "calls": 0};
         } 
         if (globals.ratelimit[called_cmd].timestamp <= Date.now()){ //timestamp has expired. make new timestamp and reset calls amt.
-            globals.ratelimit[called_cmd] = {"timestamp": Date.now() + called_cmd.ratelimit.time, "calls": 0}  
+            globals.ratelimit[called_cmd] = {"timestamp": Date.now() + called_cmd.ratelimit.time, "calls": 0};
         } 
         globals.ratelimit[called_cmd].calls++;
         return globals.ratelimit[called_cmd].calls <= called_cmd.ratelimit.calls; //will return true if calls are less or equal to limit.
     } else { //no ratelimit
         return true;
     }
-}
+};
 const auth = function(msg,called_cmd){
     if (called_cmd.hasOwnProperty("auth") && called_cmd.auth) { //both "auth": false and no property at all are valid.
         if (typeof called_cmd.auth === "string") {called_cmd.auth = [called_cmd.auth]; console.log(`INFO Auth property of ${called_cmd.aliases[0]} should be an array.`);}
         try {
             return checkAuth(msg.member,called_cmd.auth,0,globals);
         } catch (err) { //When in doubt, do not allow usage, and log this.
-            console.log(`WARN Error while authenticating command usage:\n${err}`)
+            console.log(`WARN Error while authenticating command usage:\n${err}`);
             return false;
         }
     } else {
         return true;
     }
-}
+};
 
 const reload_usergroups = function(){
     globals.usergroups = JSON.parse(fs.readFileSync("./usergroups.json"));
@@ -106,7 +106,7 @@ const reload_usergroups = function(){
         }
     }
     console.log(`INFO Usergroups reloaded, inheritance applied.`);
-}
+};
 reload_usergroups();
 
 const reload_music_files = require("./modules/reload_music_files.js");
