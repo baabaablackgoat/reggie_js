@@ -2,6 +2,7 @@ const discord = require("discord.js");
 module.exports = {
     "aliases":['np','nowplaying','whatsthissong','whatsplaying'],
     "auth":false,
+    "valid_channel_types": ["text"],
     "help": {
         "short":"What's playing?",
         "long":"Will respond with information about the song currently being played by the bot.",

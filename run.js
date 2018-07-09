@@ -30,16 +30,14 @@ console.log("INFO Creating message listener...");
 bot.on("message",(msg)=>{
     //called every time the bot "sees" a message.
     if (!msg.author.bot) { //avoid replying to bot messages. 
-        if (msg.channel.type !== "text"){ //Avoiding nasty crashes.
-            msg.channel.send(`Sorry, but I currently don't support DM commands.`);
-        } else {
-            //if (!some_global.blacklist.includes(msg.author)){
-                called_prefix = has_prefix(msg.content);
-                if (called_prefix){
-                    msg.content = msg.content.substr(called_prefix.length);
-                    let split_msg = shlex(msg.content);
-                    let called_cmd = command_exists(split_msg[0],cmds); 
-                    if (called_cmd){                    //Command confirmed to exist, proceed with auth check
+        //if (!some_global.blacklist.includes(msg.author)){
+            called_prefix = has_prefix(msg.content);
+            if (called_prefix){
+                msg.content = msg.content.substr(called_prefix.length);
+                let split_msg = shlex(msg.content);
+                let called_cmd = command_exists(split_msg[0],cmds); 
+                if (called_cmd){                    //Command confirmed to exist, proceed with auth check
+                    if (!called_cmd.hasOwnProperty("valid_channel_types") || called_cmd.valid_channel_types.includes(msg.channel.type)){ //Avoiding nasty crashes.
                         if (auth(msg,called_cmd)){      //User authentication
                             if (ratelimit(called_cmd)){ //Ratelimiting
                                 called_cmd.fn(bot,globals,msg,split_msg);   //run dat shiznit
@@ -48,13 +46,15 @@ bot.on("message",(msg)=>{
                             }                  
                         } else { //Auth failed
                             msg.channel.send(`There is an authority check on this command, and you failed to pass it, ${msg.member.displayName}.\nRequired authentication: ${called_cmd.auth}`);
-                        }
-                    } else if (settings.reply_cmd_not_found){   //Command does not exist.
-                        msg.reply("Sorry, that command does not seem to exist.");
+                        }    
+                    } else {
+                        msg.channel.send(`Sorry, but this command won't work here. Try another channel.`);
                     }
+                } else if (settings.reply_cmd_not_found){   //Command does not exist.
+                    msg.reply("Sorry, that command does not seem to exist.");
                 }
-            //} Uncomment me once blacklisting was added.
-        }
+            }
+        //} Uncomment me once blacklisting was added.
     }
 });
 

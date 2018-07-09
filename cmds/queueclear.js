@@ -11,6 +11,7 @@ const main = function(bot,globals,msg,args){
 module.exports = {
     "aliases":['flushqueue','clearqueue','nomoremusic','stopthefunk'],
     "auth":["ADMINISTRATOR"],
+    "valid_channel_types": ["text"],
     "help": {
         "short":"Empties the queue, stops playback.",
         "long":"Will forcefully stop all music playback and clear the queue.",

@@ -20,6 +20,7 @@ const main = function(bot,globals,msg,args){
 module.exports = {
     "aliases":['skip','ohgodnotthissongplease'],
     "auth":false,
+    "valid_channel_types": ["text"],
     "help": {
         "short":"Skip the current song.",
         "long":"Will add a vote to skip the song. If enough votes are reached (>=50% of listeners), the song is skipped. Only admins can force a skip.",

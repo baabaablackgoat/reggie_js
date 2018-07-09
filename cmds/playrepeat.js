@@ -14,8 +14,9 @@ const main = function(bot,globals,msg,args){
     }
 };
 module.exports = {
-    "aliases":['listenonrepeat','repeat','playrepeat'],
+    "aliases":['repeat','listenonrepeat','playrepeat'],
     "auth":["MUTE_MEMBERS"],
+    "valid_channel_types": ["text"],
     "help": {
         "short":"Will play the selected song on repeat.",
         "long":"Will add the selected song to the queue for the specified amount. (Max 10)",

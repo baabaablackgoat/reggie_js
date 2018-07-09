@@ -10,6 +10,7 @@ const main = function(bot,globals,msg,args){
 module.exports = {
     "aliases":['search','find','findme'],
     "auth":false,
+    "valid_channel_types": ["text"],
     "help": {
         "short":"WIP Look up a video on YT and queue it on demand.",
         "long":"Still a WIP",

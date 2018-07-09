@@ -1,6 +1,7 @@
 module.exports = {
     "aliases":['remove','takefromqueue'],
     "auth":["MUTE_MEMBERS"],
+    "valid_channel_types": ["text"],
     "help": {
         "short":"Remove specific item from queue.",
         "long":"Removes the item at the specified numerical position. To skip the current song (0), use skip. To see the current queue, use `queue`",

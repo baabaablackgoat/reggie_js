@@ -2,6 +2,7 @@ const discord = require("discord.js");
 module.exports = {
     "aliases":['queue','playlist','upcoming'],
     "auth":false,
+    "valid_channel_types": ["text"],
     "help": {
         "short":"Show the music queue.",
         "long":"Allows you to add something to the music queue. Currently supports YouTube links and local files.",

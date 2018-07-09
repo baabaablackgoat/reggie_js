@@ -13,6 +13,7 @@ const main = function(bot,globals,msg,args){
 module.exports = {
     "aliases":['play'],
     "auth":false,
+    "valid_channel_types": ["text"],
     "help": {
         "short":"Play something in your voice channel.",
         "long":"Allows you to add something to the music queue. Currently supports YouTube links and local files.",
