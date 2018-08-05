@@ -2,22 +2,25 @@
 
 const discord = require("discord.js");
 const get_git_info = require("git-repo-info");
+const pretty_ms = require("pretty-ms");
+
 const main = function(bot,globals,msg,args){
     let info = get_git_info();
     msg.channel.send(new discord.RichEmbed({
         "author": {"name": info.tag ? info.tag : `${info.sha.substr(0,7)} (${info.lastTag})`},
-        "timestamp": info.authorDate,
+        "timestamp": new Date(),
         "title":info.commitMessage,
-        "description": info.author,
+        "fields": [{name:'Ping',value:Math.ceil(bot.ping),inline:true},{name:'Last reconnect',value: pretty_ms(bot.uptime),inline:true},{name:'Last reboot',value: pretty_ms(new Date() - globals.bot_start),inline:true}],
+        "description": `Bot version committed by ${info.author} on ${info.authorDate}`,
         "url":`https://github.com/baabaablackgoat/reggie_js/commit/${info.sha}`
     }));
 };
 
 module.exports = {
-    "aliases":['version'],
+    "aliases":['status','version','botinfo'],
     "help": {
-        "short":"Shows bot version info",
-        "long":"Will display the current sha, the last tag, and other useful things to identify what commit this bot runs on. Also links to the respective commit in the repo.",
+        "short":"Shows bot information.",
+        "long":"Will display all kinds of things like the ping, last reboot, and version information.",
         "args": false
     },
     "fn": main
