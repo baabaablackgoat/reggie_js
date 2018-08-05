@@ -30,9 +30,9 @@ module.exports = function queue_check(globals){
                 globals.voice.connection = con;
                 if (globals.queue[0].location == "youtube"){
                     let readable_stream = ytdl(globals.queue[0].source,{filter:"audioonly"});
-                    globals.voice.dispatcher = con.playStream(readable_stream,{passes:3});
+                    globals.voice.dispatcher = con.playStream(readable_stream,{passes: 3, volume: globals.volume/100});
                 } else if (globals.queue[0].location == "local"){
-                    globals.voice.dispatcher = con.playFile(globals.queue[0].source,{passes: 3});
+                    globals.voice.dispatcher = con.playFile(globals.queue[0].source,{passes: 3, volume: globals.volume/100});
                 }
                 globals.queue[0].textchannel.send(`:musical_note: Now playing **${globals.queue[0].title}**, queued by ${globals.queue[0].requestor.displayName}, in ${globals.queue[0].voicechannel.name}`);
                 globals.voice.dispatcher.on("end",(reason)=>{ //Dispatcher has finished (Probably because the file/stream ended.)

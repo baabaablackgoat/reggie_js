@@ -1,5 +1,6 @@
 {
     "prefixes":["pls ","!","gib "],
     "reply_cmd_not_found": true,
-    "e621_minscore": 5
+    "e621_minscore": 5,
+    "default_volume": 50
 }

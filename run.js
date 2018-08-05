@@ -14,6 +14,7 @@ let globals = {
     "queue": [], //used for the music bit
     "votes": {"music_skip":[]}, //collects votes - currently only for music
     "voice": {"connection": null, "dispatcher": null}, //stores information about where
+    "volume": settings.default_volume,
     "giphy" : require("giphy-api")(token.giphy),
     "ratelimit": {},
     "settings": settings,
