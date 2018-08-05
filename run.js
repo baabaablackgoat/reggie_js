@@ -18,6 +18,7 @@ let globals = {
     "ratelimit": {},
     "settings": settings,
     "usergroups": {},
+    "invites": {},
 };
 
 console.log("INFO Attempting to read directory cmds...");
@@ -112,9 +113,52 @@ reload_usergroups();
 const reload_music_files = require("./modules/reload_music_files.js");
 reload_music_files(globals);
 
+const get_invite_uses = function(){
+    return new Promise((resolve,reject)=>{
+        let output = {};
+        bot.guilds.first().fetchInvites().then(invites =>{
+            console.log(`Found ${invites.size} for ${bot.guilds.first().name}`);
+            invites.forEach((value,key,map)=>{
+                output[value.code] = value.uses;
+            });
+            resolve(output);
+        });
+    });
+};
+
+
 bot.on("ready",()=>{
     //runs once the bot is connected to discord using Client.login()
     console.log(`INFO Logged in: ${bot.user.tag}`);
+    get_invite_uses().then(value=>{
+        globals.invites = value;
+    });
+});
+
+bot.on("guildMemberAdd",member =>{
+    let used_invite = false;
+    let get_new_invites = get_invite_uses();
+    get_new_invites.then(new_invite_uses=>{
+        for (let key in new_invite_uses){
+            if (!globals.invites.hasOwnProperty(key) && new_invite_uses[key] >= 1){ //Checking for new invites only
+                used_invite = key;
+                break;
+            } else if (new_invite_uses[key] > globals.invites[key]){
+                used_invite = key;
+                break;
+            }
+        }
+        if (!used_invite) {console.log(`Couldn't detect the inviter for ${member.displayName}.`);} else {
+            console.log(`New member ${member.displayName} joined with code ${used_invite}. Attempting to fetch and DM invite creator...`);
+            bot.fetchInvite(used_invite).then(invite =>{
+                invite.inviter.createDM().then(channel =>{
+                    channel.send(`Hey, you! I have detected that the user **${member.displayName}** has joined ${invite.guild.name} using your invite code ${used_invite}.\nKeep in mind that users without a role might get removed without notice.`)
+                        .catch(err=>{console.log(`Couldn't send a DM to ${user.name}:\n ${err}`);});
+                });
+            });
+        }
+        globals.invites = new_invite_uses;
+    });
 });
 
 bot.on("error",(err)=>{
