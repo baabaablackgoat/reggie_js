@@ -10,11 +10,7 @@ const main = function(bot,globals,msg,args){
         "author": {"name": info.tag ? info.tag : `${info.sha.substr(0,7)} (${info.lastTag})`},
         "timestamp": new Date(),
         "title":info.commitMessage,
-<<<<<<< HEAD:cmds/status.js
         "fields": [{name:'Ping',value:Math.ceil(bot.ping),inline:true},{name:'Last reconnect',value: pretty_ms(bot.uptime),inline:true},{name:'Last reboot',value: pretty_ms(new Date() - globals.bot_start),inline:true}],
-=======
-        "fields": [{name:'Ping',value:String(bot.ping),inline:true},{name:'Last reconnect',value: pretty_ms(bot.uptime),inline:true},{name:'Last reboot',value: pretty_ms(new Date() - globals.bot_start),inline:true}],
->>>>>>> f235b5fd59bee849d97ce38519272605600636fa:cmds/status.js
         "description": `Bot version committed by ${info.author} on ${info.authorDate}`,
         "url":`https://github.com/baabaablackgoat/reggie_js/commit/${info.sha}`
     }));
