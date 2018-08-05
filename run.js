@@ -10,6 +10,7 @@ if (!fs.existsSync("./settings.json")){fs.copyFileSync("./templates/settings_tem
 let settings = require("./settings.json");
 if (!fs.existsSync("./usergroups.json")){fs.copyFileSync("./templates/usergroups_template.json","./usergroups.json");}
 let globals = {
+    "bot_start": new Date(),
     "cmds": cmds,
     "queue": [], //used for the music bit
     "votes": {"music_skip":[]}, //collects votes - currently only for music
