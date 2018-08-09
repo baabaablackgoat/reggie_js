@@ -1,5 +1,13 @@
 const request = require('request');
 const discord = require('discord.js');
+const emojicharacters= require('./../modules/emojicharacters.js');
+
+const react_incremental = function(sent_message,items_length,pos){
+    sent_message.react(emojicharacters[pos]).then(reaction=>{
+        if (pos < items_length) {react_incremental(sent_message,items_length,pos+1);} //ARRAYS START AT ONE Kappa
+    });
+}
+
 const main = function(bot,globals,msg,args){
     if (args[1]){
         let query = args.slice(1).join(" ").replace(/[^\w\s]/gi, '');
@@ -21,8 +29,7 @@ const main = function(bot,globals,msg,args){
                         richEmbed.addField(String(i+1),`${items[i].snippet.title} <https://youtu.be/${items[i].id.videoId}>`);
                     }
                     sent_message.edit(richEmbed).then(sent_message=>{
-                        
-                        //for (let i=0; i<items.length;i++){sent_message.react(emotes[i]);}
+                        react_incremental(sent_message,items.length,1);
                     });
                 }
             });
