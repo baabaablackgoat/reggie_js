@@ -21,6 +21,7 @@ let globals = {
     "settings": settings,
     "usergroups": {},
     "invites": {},
+    "token": token,
 };
 
 console.log("INFO Attempting to read directory cmds...");
